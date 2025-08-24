@@ -29,6 +29,7 @@ export const useProducts = () => {
 
     const remove = async (id) => {
         await dispatch(deleteProductThunk(id));
+        dispatch(fetchProducts());
     };
 
     const startEdit = (product) => dispatch(setEditing(product));
