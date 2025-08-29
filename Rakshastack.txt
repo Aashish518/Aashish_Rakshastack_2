@@ -1,0 +1,71 @@
+---> Summary :-
+
+1. Add Product (Create)
+
+        User sends product details + images.
+
+        Images upload → stored in Cloudinary.
+
+        Cloudinary returns public_id + url.
+
+        These are saved in MongoDB inside product document.
+
+        New product created.
+
+2. Get Products (Read)
+
+        User requests product list or details.
+
+        Server fetches product data (with images, rating, etc.) from MongoDB.
+
+        Response sent to user.
+
+3. Update Product (Update)
+
+        User sends updated fields (name, price, stock, etc.).
+
+        If new images uploaded →
+
+        Old images deleted from Cloudinary (using public_id).
+
+        New images uploaded to Cloudinary → public_id + url updated in DB.
+
+        If rating given → recalculate average rating + count.
+
+        Product updated with new details/images/rating.
+
+4. Delete Product (Delete)
+
+        User deletes a product.
+
+        Server finds product in DB.
+
+        All images for that product are deleted from Cloudinary (using public_id).
+
+        Product record removed from MongoDB.
+
+        Product fully deleted (DB + Cloudinary).
+
+
+---> Challenges Faced :-
+
+1. File Upload & Cloudinary
+
+        Handling multiple images via multer.
+
+        Uploading to Cloudinary and storing public_id + url.
+
+        Replacing old images on update & deleting them properly.
+
+2.Array Parsing:
+
+        If sent via form-data, variants often come as JSON string → must parse with JSON.parse().
+
+        If parsing fails → server crashes.
+
+3. Partial Update Handling:
+
+        If only rating sent → other fields must remain untouched.
+
+        If both rating + details sent → update both correctly.
+
